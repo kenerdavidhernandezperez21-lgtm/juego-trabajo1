@@ -1,34 +1,130 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Sopa de Letras</title>
+<meta charset="UTF-8">
+<title>Sopa de Letras</title>
+
+<style>
+table{
+    border-collapse: collapse;
+}
+
+td{
+    width:40px;
+    height:40px;
+    border:1px solid black;
+    text-align:center;
+    font-size:20px;
+    cursor:pointer;
+    user-select:none;
+}
+
+.seleccionada{
+    background-color:yellow;
+}
+
+.encontrada{
+    background-color:lightgreen;
+}
+</style>
 </head>
 <body>
 
-<h1>Sopa de Letras</h1>
+<h2>Sopa de Letras</h2>
 
-<table border="1">
+<p>Palabras a encontrar:</p>
+<ul>
+    <li id="HTML">HTML</li>
+    <li id="CSS">CSS</li>
+</ul>
+
+<table id="sopa">
 <tr>
-<td>C</td><td>O</td><td>D</td><td>I</td><td>G</td><td>O</td>
+<td>H</td><td>T</td><td>M</td><td>L</td>
 </tr>
 <tr>
-<td>A</td><td>B</td><td>H</td><td>T</td><td>M</td><td>L</td>
+<td>A</td><td>B</td><td>C</td><td>D</td>
 </tr>
 <tr>
-<td>J</td><td>A</td><td>V</td><td>A</td><td>S</td><td>C</td>
+<td>C</td><td>S</td><td>S</td><td>F</td>
+</tr>
+<tr>
+<td>G</td><td>H</td><td>I</td><td>J</td>
 </tr>
 </table>
 
-<h3>Palabras a encontrar:</h3>
-<ul>
-<li>HTML</li>
-<li>CODIGO</li>
-<li>JAVA</li>
-</ul>
+<h3>Seleccionado:</h3>
+<p id="texto"></p>
 
-<button onclick="location.href='preguntas.html'">
-Siguiente Juego
-</button>
+<script>
+
+let seleccion = [];
+
+document.querySelectorAll("td").forEach(celda => {
+
+    celda.addEventListener("click", function(){
+
+        this.classList.toggle("seleccionada");
+
+        if(this.classList.contains("seleccionada")){
+            seleccion.push(this);
+        }else{
+            seleccion = seleccion.filter(c => c !== this);
+        }
+
+        verificar();
+    });
+
+});
+
+function verificar(){
+
+    let palabra = seleccion.map(c => c.textContent).join("");
+
+    document.getElementById("texto").innerText = palabra;
+
+    if(palabra === "HTML"){
+
+        seleccion.forEach(c=>{
+            c.classList.remove("seleccionada");
+            c.classList.add("encontrada");
+        });
+
+        document.getElementById("HTML").style.textDecoration = "line-through";
+
+        localStorage.setItem("HTML","encontrada");
+
+        seleccion = [];
+    }
+
+    if(palabra === "CSS"){
+
+        seleccion.forEach(c=>{
+            c.classList.remove("seleccionada");
+            c.classList.add("encontrada");
+        });
+
+        document.getElementById("CSS").style.textDecoration = "line-through";
+
+        localStorage.setItem("CSS","encontrada");
+
+        seleccion = [];
+    }
+
+}
+
+window.onload = function(){
+
+    if(localStorage.getItem("HTML")){
+        document.getElementById("HTML").style.textDecoration = "line-through";
+    }
+
+    if(localStorage.getItem("CSS")){
+        document.getElementById("CSS").style.textDecoration = "line-through";
+    }
+
+}
+</script>
 
 </body>
 </html>
