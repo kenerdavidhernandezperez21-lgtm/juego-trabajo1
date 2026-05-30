@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Preguntas</title>
+</head>
+<body>
+
+<h1>Preguntas y Respuestas</h1>
+
+<p>¿Qué significa HTML?</p>
+
+<input type="text" id="respuesta">
+
+<button onclick="verificar()">
+Comprobar
+</button>
+
+<p id="resultado"></p>
+
+<button onclick="location.href='memoria.html'">
+Siguiente Juego
+</button>
+
+<script>
+function verificar() {
+    let r = document.getElementById("respuesta").value;
+
+    if(r.toUpperCase() === "HYPERTEXT MARKUP LANGUAGE"){
+        document.getElementById("resultado").innerHTML = "Correcto";
+    }else{
+        document.getElementById("resultado").innerHTML = "Incorrecto";
+    }
+}
+</script>
+
+</body>
+</html>
